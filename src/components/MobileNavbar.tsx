@@ -1,7 +1,7 @@
+import Button from "./Button";
 import React, { useState } from "react";
 import CloseIcon from "../assets/icons/CloseIcon";
 import BurgerMenuIcon from "../assets/icons/BurgerMenuIcon";
-import Button from "./Button";
 
 function MobileNavbar() {
   const [openNav, setOpenNav] = useState(false);
