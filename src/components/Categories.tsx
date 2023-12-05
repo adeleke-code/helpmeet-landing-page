@@ -1,18 +1,9 @@
 import React from "react";
-
-const categories = [
-  "Design",
-  "Business",
-  "Construction",
-  "Fashion",
-  "Tech",
-  "Craft",
-  "Repair",
-];
+import categories from "../data/categories";
 
 function Categories() {
   return (
-    <div className="hidden md:block sticky top-20 right-0 left-0 z-20 h-12 bg-white">
+    <div className="hidden md:block sticky top-20 right-0 left-0 z-20 h-12 bg-[#F8F9FF]">
       <div className="max-w-7xl mx-auto flex items-center justify-center">
         {categories.map((category) => (
           <span
