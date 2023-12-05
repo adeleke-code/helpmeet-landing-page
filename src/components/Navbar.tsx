@@ -6,7 +6,7 @@ import SearchIcon from "../assets/icons/SearchIcon";
 
 function Navbar() {
   return (
-    <header className="sticky top-0 left-0 right-0 h-16 md:h-20 z-10 bg-white">
+    <header className="sticky top-0 left-0 right-0 h-16 md:h-20 z-10 bg-[#F8F9FF]">
       <nav className="max-w-7xl mx-auto p-4 flex items-center justify-between">
         <img src={Logo} alt="Logo" />
 
