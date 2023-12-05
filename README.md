@@ -14,7 +14,7 @@ Before you begin, ensure you have the following installed on your machine:
 Open your terminal and run the following command to clone the repository:
 
 ```bash
-~$ git clone https://github.com/helpmeetapp/helpmeet-landing-page.git
+git clone https://github.com/helpmeetapp/helpmeet-landing-page.git
 ```
 
 ## Navigate to the Project
@@ -22,7 +22,7 @@ Open your terminal and run the following command to clone the repository:
 Change into the project directory:
 
 ```bash
-~$ cd helpmeet-landing-page
+cd helpmeet-landing-page
 ```
 
 ## Install Dependencies
@@ -30,7 +30,7 @@ Change into the project directory:
 Install the project dependencies using Yarn:
 
 ```bash
-~$ yarn install
+yarn install
 ```
 
 This will download and install the necessary packages specified in the package.json file.
