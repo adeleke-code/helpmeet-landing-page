@@ -1,11 +1,11 @@
 import car from "../assets/car.png";
+import welder from "../assets/welder.png";
 import plumber from "../assets/plumber.png";
+import pottery from "../assets/pottery.png";
 import hardware from "../assets/hardware.png";
-import technician from "../assets/technician.png";
 import engineer from "../assets/engineer.png";
 import mechanic from "../assets/mechanic.png";
-import welder from "../assets/welder.png";
-import pottery from "../assets/pottery.png";
+import technician from "../assets/technician.png";
 
 import avatar from "../assets/avatar.png";
 const artisans = [
