@@ -8,6 +8,7 @@ interface ButtonProps {
   onClick?: () => void;
   disabled?: boolean;
   outline?: boolean;
+  extraLarge?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -15,6 +16,7 @@ const Button: React.FC<ButtonProps> = ({
   outline,
   disabled,
   large,
+  extraLarge,
   fullWidth,
   onClick,
   primary,
@@ -34,6 +36,7 @@ const Button: React.FC<ButtonProps> = ({
     ${primary ? "bg-[#009379]" : "bg-[#E5F4F2]"}
     ${primary ? "text-white" : "text-[#009379]"}
     ${large ? "px-12 py-2" : "px-8 py-2"}
+    ${extraLarge ? "py-4 px-14" : ""}
     ${outline ? "bg-transparent" : ""}
     ${outline ? "border-2 border-[#009379]" : ""}
     ${outline ? "text-[#009379]" : ""}

@@ -1,9 +1,12 @@
 import React from "react";
 import Hero from "./components/Hero";
+import About from "./components/About";
 import Navbar from "./components/Navbar";
 import Crafts from "./components/Crafts";
 import Artisans from "./components/Artisans";
+import Features from "./components/Features";
 import Categories from "./components/Categories";
+import Testimonials from "./components/Testimonials";
 
 function App() {
   return (
@@ -13,6 +16,9 @@ function App() {
       <Hero />
       <Crafts />
       <Artisans />
+      <Features />
+      <About />
+      <Testimonials />
     </div>
   );
 }
