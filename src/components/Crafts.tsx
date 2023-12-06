@@ -10,7 +10,7 @@ function Crafts() {
             key={craft.icon}
             className="border border-[#E5F4F2] rounded-full flex gap-1 items-center justify-center flex-row p-2 text-[#2D2D2D] md:text-lg hover:bg-[#E5F4F2] hover:border-[#009379]"
           >
-            <img src={craft.icon} alt="Craft Icon" />
+            <img src={craft.icon} alt={craft.name} />
             {craft.name}
           </span>
         ))}
