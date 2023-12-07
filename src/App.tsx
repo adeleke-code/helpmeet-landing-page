@@ -3,6 +3,8 @@ import Hero from "./components/Hero";
 import About from "./components/About";
 import Navbar from "./components/Navbar";
 import Crafts from "./components/Crafts";
+import Banner from "./components/Banner";
+import Footer from "./components/Footer";
 import Artisans from "./components/Artisans";
 import Features from "./components/Features";
 import Categories from "./components/Categories";
@@ -19,6 +21,8 @@ function App() {
       <Features />
       <About />
       <Testimonials />
+      <Banner />
+      <Footer />
     </div>
   );
 }
