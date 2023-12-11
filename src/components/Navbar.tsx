@@ -29,11 +29,10 @@ function Navbar() {
             <li>Discover</li>
             <li>Hire</li>
             <li>Jobs</li>
+            <li>Sell your skills</li>
           </ul>
-          <div className="flex space-x-2 lg:space-x-4">
-            <Button label="Sign Up" />
-            <Button label="Sign In" primary />
-          </div>
+
+          <Button label="Sign In" primary />
         </div>
 
         {/* Mobile view */}
