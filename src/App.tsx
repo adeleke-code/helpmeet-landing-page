@@ -1,28 +1,19 @@
 import React from "react";
-import Hero from "./components/Hero";
-import About from "./components/About";
+import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
-import Crafts from "./components/Crafts";
-import Banner from "./components/Banner";
-import Footer from "./components/Footer";
-import Artisans from "./components/Artisans";
-import Features from "./components/Features";
-import Categories from "./components/Categories";
-import Testimonials from "./components/Testimonials";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Artisans from "./pages/Artisans";
 
 function App() {
   return (
     <div className="bg-[#F8F9FF] w-full h-full">
-      <Navbar />
-      <Categories />
-      <Hero />
-      <Crafts />
-      <Artisans />
-      <Features />
-      <About />
-      <Testimonials />
-      <Banner />
-      <Footer />
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/artisans" element={<Artisans />} />
+        </Routes>
+      </Router>
     </div>
   );
 }
