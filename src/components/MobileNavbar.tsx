@@ -30,11 +30,10 @@ function MobileNavbar() {
             <li>Discover</li>
             <li>Hire</li>
             <li>Jobs</li>
+            <li>Sell your skills</li>
           </ul>
-          <div className="flex flex-col items-center space-y-2">
-            <Button label="Sign Up" large />
-            <Button label="Sign In" primary large />
-          </div>
+
+          <Button label="Sign In" primary large />
         </div>
       </div>
     </div>
