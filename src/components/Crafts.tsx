@@ -3,8 +3,8 @@ import crafts from "../data/crafts";
 
 function Crafts() {
   return (
-    <section className="h-full">
-      <div className="max-w-7xl mx-auto py-2 flex gap-2 flex-wrap items-center justify-center border-b-gray-500 border-b-2">
+    <section className="h-full w-full border-b-gray-500 border-b-2">
+      <div className="max-w-7xl mx-auto py-2 flex gap-2 flex-wrap items-center justify-center ">
         {crafts.map((craft) => (
           <span
             key={craft.icon}
