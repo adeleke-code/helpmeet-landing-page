@@ -6,7 +6,7 @@ import envelope from "../assets/icons/envelope.png";
 import rating from "../assets/icons/star-rating.png";
 import shoppingBag from "../assets/icons/shopping-bag.png";
 
-function Artisans() {
+function ArtisansSection() {
   const newArtisans = artisans.slice(0, 8);
 
   return (
@@ -70,4 +70,4 @@ function Artisans() {
   );
 }
 
-export default Artisans;
+export default ArtisansSection;
