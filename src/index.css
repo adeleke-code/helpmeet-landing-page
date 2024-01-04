@@ -1,6 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+body{
+  background-color: #F8F9FF;
+  font-family: "Outfit", sans-serif;
+  font-size: 1rem;
+}
 
-
+.hero-section {
+  position: relative;
+  background-image: url("./assets/hero-bg.png");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
