@@ -1,10 +1,18 @@
-import React from "react";
+import { FC } from "react";
 import categories from "../data/categories";
 
-function Categories() {
+type Props = {
+  isVisible: boolean;
+};
+
+const Categories: FC<Props> = ({ isVisible }) => {
   return (
-    <div className="hidden md:block sticky top-20 right-0 left-0 z-20 h-12 bg-[#F8F9FF]">
-      <div className="max-w-7xl mx-auto flex items-center justify-center">
+    <div
+      className={`${
+        isVisible ? "hidden md:block" : "hidden"
+      } sticky top-20 right-0 left-0 z-20 h-12 bg-[#F8F9FF]`}
+    >
+      <div className="w-full xl:max-w-7xl xl:mx-auto flex flex-wrap items-center justify-center">
         {categories.map((category) => (
           <span
             key={category}
@@ -16,6 +24,6 @@ function Categories() {
       </div>
     </div>
   );
-}
+};
 
 export default Categories;

@@ -1,38 +1,52 @@
-import React from "react";
-import Button from "./Button";
-import Logo from "../assets/logo.png";
+import { FC } from "react";
 import MobileNavbar from "./MobileNavbar";
-import SearchIcon from "../assets/icons/SearchIcon";
+import { FaSearch } from "react-icons/fa";
 
-function Navbar() {
+type Props = {
+  isVisible?: boolean;
+};
+
+const Navbar: FC<Props> = ({ isVisible }) => {
   return (
-    <header className="sticky top-0 left-0 right-0 h-16 md:h-20 z-10 bg-[#F8F9FF]">
-      <nav className="max-w-7xl mx-auto p-4 flex items-center justify-between">
-        <img src={Logo} alt="Logo" />
+    <header
+      className={`${
+        isVisible
+          ? "bg-[#F8F9FF] text-[#2D2D2D] border-b"
+          : "bg-[#2D2D2D] text-[#F8F9FF]"
+      } sticky top-0 h-16 w-full md:h-20 z-10`}
+    >
+      <nav className="w-full p-4 xl:max-w-7xl xl:mx-auto flex items-center justify-between">
+        <h1 className="font-bold text-3xl">HELPMEET</h1>
 
-        <div className="hidden lg:block">
+        <div className={isVisible ? "hidden lg:block" : "hidden"}>
           <div className="relative text-lg">
             <input
               type="text"
-              placeholder="Search"
-              className="w-[500px] py-2 px-4 bg-[#BFE9F5] rounded-3xl focus:outline-none focus:ring focus:border-blue-300"
+              placeholder="Search for any service..."
+              className="bg-[#F8F9FF] text-[#2D2D2D] lg:w-[400px] xl:w-[500px] py-2 px-4 rounded-xl focus:outline-none border"
             />
-            <div className="absolute inset-y-0 right-0 flex items-center px-2 bg-[#009379] rounded-3xl">
-              <SearchIcon />
+            <div className="absolute inset-y-0 right-0 flex items-center px-3 bg-[#009379] rounded-r-xl">
+              <FaSearch color="#F8F9FF" />
             </div>
           </div>
         </div>
 
         {/* Desktop view */}
-        <div className="hidden text-lg md:flex gap-4 items-center">
-          <ul className="flex space-x-2 lg:space-x-4 text-[#009379] font-semibold">
+        <div className="hidden text-base md:flex gap-4 lg:gap-2 xl:gap-8 items-center">
+          <ul className="flex gap-4  xl:gap-8 font-semibold">
             <li>Discover</li>
             <li>Hire</li>
             <li>Jobs</li>
             <li>Sell your skills</li>
           </ul>
 
-          <Button label="Sign In" primary />
+          <button
+            className={`border px-4 py-2 ${
+              isVisible ? "border-[#2D2D2D]" : "border-[#F8F9FF]"
+            }`}
+          >
+            Sign In
+          </button>
         </div>
 
         {/* Mobile view */}
@@ -40,6 +54,6 @@ function Navbar() {
       </nav>
     </header>
   );
-}
+};
 
 export default Navbar;
