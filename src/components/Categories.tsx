@@ -8,8 +8,10 @@ type Props = {
 const Categories: FC<Props> = ({ isVisible }) => {
   return (
     <div
-      className={`${
-        isVisible ? "hidden md:block" : "hidden"
+      className={` ${
+        isVisible
+          ? "hidden md:block animate-fade-in"
+          : "animate-fade-out hidden"
       } sticky top-20 right-0 left-0 z-20 h-12 bg-[#F8F9FF]`}
     >
       <div className="w-full xl:max-w-7xl xl:mx-auto flex flex-wrap items-center justify-center">
