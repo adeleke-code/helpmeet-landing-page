@@ -1,9 +1,13 @@
 import Button from "./Button";
-import React, { useState } from "react";
+import React, { FC, useState } from "react";
 import CloseIcon from "../assets/icons/CloseIcon";
 import BurgerMenuIcon from "../assets/icons/BurgerMenuIcon";
 
-function MobileNavbar() {
+type MobileNavbarProps = {
+  onLoginClick: () => void;
+};
+
+const MobileNavbar: FC<MobileNavbarProps> = ({ onLoginClick }) => {
   const [openNav, setOpenNav] = useState(false);
 
   const handleNav = () => {
@@ -33,10 +37,10 @@ function MobileNavbar() {
             <li>Sell your skills</li>
           </ul>
 
-          <Button label="Sign In" primary large />
+          <Button label="Sign In" primary large onClick={onLoginClick} />
         </div>
       </div>
     </div>
   );
-}
+};
 export default MobileNavbar;
