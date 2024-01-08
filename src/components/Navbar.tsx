@@ -2,11 +2,12 @@ import { FC } from "react";
 import MobileNavbar from "./MobileNavbar";
 import { FaSearch } from "react-icons/fa";
 
-type Props = {
+type NavbarProps = {
   isVisible?: boolean;
+  onLoginClick: () => void;
 };
 
-const Navbar: FC<Props> = ({ isVisible }) => {
+const Navbar: FC<NavbarProps> = ({ isVisible, onLoginClick }) => {
   return (
     <header
       className={`${
@@ -44,13 +45,14 @@ const Navbar: FC<Props> = ({ isVisible }) => {
             className={`border px-4 py-2 ${
               isVisible ? "border-[#2D2D2D]" : "border-[#F8F9FF]"
             }`}
+            onClick={onLoginClick}
           >
             Sign In
           </button>
         </div>
 
         {/* Mobile view */}
-        <MobileNavbar />
+        <MobileNavbar onLoginClick={onLoginClick} />
       </nav>
     </header>
   );
