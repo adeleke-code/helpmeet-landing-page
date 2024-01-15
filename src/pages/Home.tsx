@@ -9,8 +9,10 @@ import Navbar from "../components/Navbar";
 import Features from "../components/Features";
 import Categories from "../components/Categories";
 import LoginModal from "../components/LoginModal";
+import VerifyModal from "../components/VerifyModal";
 import Testimonials from "../components/Testimonials";
 import RegisterModal from "../components/RegisterModal";
+import ResendOtpModal from "../components/ResendOtpModal";
 import ArtisansSection from "../components/ArtisansSection";
 
 function Home() {
@@ -18,6 +20,8 @@ function Home() {
 
   const [isRegisterModalOpen, setRegisterModalOpen] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isOtpModalOpen, setOtpModalOpen] = useState(false);
+  const [isResendOtpModalOpen, setResendOtpModalOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,6 +59,23 @@ function Home() {
     setLoginModalOpen(false);
   };
 
+  const openOtpModal = () => {
+    setOtpModalOpen(true);
+    setRegisterModalOpen(false);
+  };
+
+  const closeOtpModal = () => {
+    setOtpModalOpen(false);
+  };
+
+  const openResendOtpModal = () => {
+    setResendOtpModalOpen(true);
+  };
+
+  const closeResendOtpModal = () => {
+    setResendOtpModalOpen(false);
+  };
+
   return (
     <>
       <Navbar isVisible={isVisible} onLoginClick={openLoginModal} />
@@ -73,12 +94,26 @@ function Home() {
         isOpen={isRegisterModalOpen}
         onClose={closeRegisterModal}
         openLoginModal={openLoginModal}
+        openOtpModal={openOtpModal}
       />
 
       <LoginModal
         isOpen={isLoginModalOpen}
         onClose={closeLoginModal}
         openRegisterModal={openRegisterModal}
+      />
+
+      <VerifyModal
+        isOpen={isOtpModalOpen}
+        onClose={closeOtpModal}
+        openLoginModal={openLoginModal}
+        openResendOtpModal={openResendOtpModal}
+      />
+
+      <ResendOtpModal
+        isOpen={isResendOtpModalOpen}
+        onClose={closeResendOtpModal}
+        openOtpModal={openOtpModal}
       />
     </>
   );
