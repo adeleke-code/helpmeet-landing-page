@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import Modal from "@mui/material/Modal";
 import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
@@ -10,8 +11,6 @@ import { ChangeEvent, FC, useState } from "react";
 
 import Button from "./Button";
 import TextInput from "./TextInput";
-
-import { toast } from "react-toastify";
 
 type LoginModalProps = {
   isOpen: boolean;
@@ -39,7 +38,10 @@ const LoginModal: FC<LoginModalProps> = ({
     try {
       setIsLoading(true);
 
-      await axios.post("http://54.193.156.213/v1/auth/login/", details);
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URI}/auth/login/`,
+        details
+      );
 
       // console.log(res.data);
 

@@ -1,12 +1,11 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import Modal from "@mui/material/Modal";
 import { ImSpinner10 } from "react-icons/im";
 import { MdLockOutline } from "react-icons/md";
 import { ChangeEvent, FC, useState } from "react";
 
 import TextInput from "./TextInput";
-
-import { toast } from "react-toastify";
 
 type VerifyModalProps = {
   isOpen: boolean;
@@ -34,7 +33,10 @@ const VerifyModal: FC<VerifyModalProps> = ({
     try {
       setIsLoading(true);
 
-      await axios.post("http://54.193.156.213/v1/auth/otp/verify/", verify);
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URI}/auth/otp/verify/`,
+        verify
+      );
 
       // console.log(res.data);
 

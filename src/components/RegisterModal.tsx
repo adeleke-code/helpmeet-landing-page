@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import Modal from "@mui/material/Modal";
 import { LuUser2 } from "react-icons/lu";
 import { FaGoogle } from "react-icons/fa";
@@ -9,8 +10,6 @@ import { MdOutlineEmail } from "react-icons/md";
 import { FiEye, FiEyeOff } from "react-icons/fi";
 import { ChangeEvent, FC, useState } from "react";
 import { MdOutlineLocalPhone } from "react-icons/md";
-
-import { toast } from "react-toastify";
 
 import Button from "./Button";
 import TextInput from "./TextInput";
@@ -57,7 +56,10 @@ const RegisterModal: FC<RegisterModalProps> = ({
       try {
         setIsLoading(true);
 
-        await axios.post("http://54.193.156.213/v1/auth/users/", details);
+        await axios.post(
+          `${process.env.REACT_APP_BASE_URI}/auth/users/`,
+          details
+        );
 
         // console.log(response.data);
 

@@ -1,11 +1,9 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 import Modal from "@mui/material/Modal";
 import { ImSpinner10 } from "react-icons/im";
 import { MdOutlineEmail } from "react-icons/md";
 import { ChangeEvent, FC, useState } from "react";
-
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import TextInput from "./TextInput";
 
@@ -33,7 +31,10 @@ const ResendOtpModal: FC<ResendOtpModalProps> = ({
     try {
       setIsLoading(true);
 
-      await axios.post("http://54.193.156.213/v1/auth/otp/new/", verify);
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URI}/auth/otp/new/`,
+        verify
+      );
 
       // console.log(res.data);
 
