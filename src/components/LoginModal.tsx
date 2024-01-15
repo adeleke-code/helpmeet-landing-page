@@ -1,13 +1,16 @@
+import axios from "axios";
+import { toast } from "react-toastify";
+import Modal from "@mui/material/Modal";
+import { FaGoogle } from "react-icons/fa";
+import { FaFacebookF } from "react-icons/fa";
+import { ImSpinner10 } from "react-icons/im";
+import { MdLockOutline } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
+import { MdOutlineEmail } from "react-icons/md";
 import { ChangeEvent, FC, useState } from "react";
 
 import Button from "./Button";
 import TextInput from "./TextInput";
-
-import Modal from "@mui/material/Modal";
-import { FaGoogle } from "react-icons/fa";
-import { FaFacebookF } from "react-icons/fa";
-import { MdLockOutline } from "react-icons/md";
-import { MdOutlineEmail } from "react-icons/md";
 
 type LoginModalProps = {
   isOpen: boolean;
@@ -20,18 +23,51 @@ const LoginModal: FC<LoginModalProps> = ({
   onClose,
   openRegisterModal,
 }) => {
-  const [user, setUser] = useState({ email: "", password: "" });
+  const [details, setDetails] = useState({ email: "", password: "" });
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setUser((prev) => {
+    setDetails((prev) => {
       return { ...prev, [event.target.name]: event.target.value };
     });
   };
 
-  const handleSignIn = () => {
-    console.log(user);
-    setUser({ email: "", password: "" });
+  const handleSignIn = async () => {
+    try {
+      setIsLoading(true);
+
+      await axios.post(
+        `${process.env.REACT_APP_BASE_URI}/auth/login/`,
+        details
+      );
+
+      // console.log(res.data);
+
+      setDetails({ email: "", password: "" });
+
+      toast.success("Sign in successfull. Welcome.", {
+        autoClose: 5000,
+        position: "top-right",
+        hideProgressBar: true,
+        closeOnClick: true,
+      });
+
+      navigate("/authenticated");
+    } catch (error) {
+      setIsLoading(false);
+
+      toast.error("Sign in failed.", {
+        autoClose: 5000,
+        position: "top-right",
+        hideProgressBar: true,
+        closeOnClick: true,
+      });
+      // console.log(error);
+    }
   };
+
   return (
     <Modal open={isOpen} onClose={onClose}>
       <div className="bg-[#F8F9FF] absolute w-[90%] h-[80%] lg:w-[900px] md:h-[500px] left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-[30px]">
@@ -59,7 +95,7 @@ const LoginModal: FC<LoginModalProps> = ({
                     name="email"
                     placeholder="Email"
                     iconComponent={<MdOutlineEmail />}
-                    value={user.email}
+                    value={details.email}
                     onChange={handleInputChange}
                   />
 
@@ -68,7 +104,7 @@ const LoginModal: FC<LoginModalProps> = ({
                     name="password"
                     placeholder="Password"
                     iconComponent={<MdLockOutline />}
-                    value={user.password}
+                    value={details.password}
                     onChange={handleInputChange}
                   />
 
@@ -78,7 +114,23 @@ const LoginModal: FC<LoginModalProps> = ({
                   </small>
                 </div>
 
-                <Button primary large label="Sign In" onClick={handleSignIn} />
+                <button
+                  onClick={handleSignIn}
+                  className="px-12 py-2 bg-[#009379] text-[#F8F9FF] rounded-2xl font-semibold"
+                  disabled={
+                    isLoading ||
+                    Object.values(details).some((value) => value.trim() === "")
+                  }
+                >
+                  {isLoading && (
+                    <span className="flex items-center gap-2">
+                      <ImSpinner10 className="animate-spin" />
+                      <p>Signing in...</p>
+                    </span>
+                  )}
+
+                  {!isLoading && "Sign In"}
+                </button>
               </div>
               <small className="block md:hidden">
                 Don't have an account?{" "}
