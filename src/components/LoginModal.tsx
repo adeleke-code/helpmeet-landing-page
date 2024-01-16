@@ -5,9 +5,9 @@ import { FaGoogle } from "react-icons/fa";
 import { FaFacebookF } from "react-icons/fa";
 import { ImSpinner10 } from "react-icons/im";
 import { MdLockOutline } from "react-icons/md";
-import { useNavigate } from "react-router-dom";
 import { MdOutlineEmail } from "react-icons/md";
-import { ChangeEvent, FC, useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import Button from "./Button";
 import TextInput from "./TextInput";
@@ -23,42 +23,47 @@ const LoginModal: FC<LoginModalProps> = ({
   onClose,
   openRegisterModal,
 }) => {
-  const [details, setDetails] = useState({ email: "", password: "" });
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDetails((prev) => {
+    setCredentials((prev) => {
       return { ...prev, [event.target.name]: event.target.value };
     });
   };
 
-  const handleSignIn = async () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     try {
       setIsLoading(true);
 
-      await axios.post(
+      const response = await axios.post(
         `${process.env.REACT_APP_BASE_URI}/auth/login/`,
-        details
+        credentials
       );
 
-      // console.log(res.data);
+      console.log(response.data);
+      const { access, refresh } = response.data.data;
 
-      setDetails({ email: "", password: "" });
+      localStorage.setItem("access", access);
+      localStorage.setItem("refresh", refresh);
 
-      toast.success("Sign in successfull. Welcome.", {
-        autoClose: 5000,
+      setCredentials({ email: "", password: "" });
+
+      toast.success("Sign in successful. Welcome.", {
+        autoClose: 3000,
         position: "top-right",
         hideProgressBar: true,
         closeOnClick: true,
       });
 
-      navigate("/authenticated");
+      onClose();
     } catch (error) {
       setIsLoading(false);
 
-      toast.error("Sign in failed.", {
+      toast.error("Invalid credentials.", {
         autoClose: 5000,
         position: "top-right",
         hideProgressBar: true,
@@ -86,7 +91,7 @@ const LoginModal: FC<LoginModalProps> = ({
                 </div>
               </div>
 
-              <div className="w-3/4 space-y-6">
+              <form onSubmit={handleSubmit} className="w-3/4 space-y-6">
                 <p className="text-lg">Or use your email</p>
 
                 <div className="space-y-4">
@@ -95,18 +100,28 @@ const LoginModal: FC<LoginModalProps> = ({
                     name="email"
                     placeholder="Email"
                     iconComponent={<MdOutlineEmail />}
-                    value={details.email}
+                    value={credentials.email}
                     onChange={handleInputChange}
                   />
 
-                  <TextInput
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    iconComponent={<MdLockOutline />}
-                    value={details.password}
-                    onChange={handleInputChange}
-                  />
+                  <div className="bg-[#E5F4F2] flex items-center gap-2 p-2 rounded-xl">
+                    <MdLockOutline size={20} />
+                    <input
+                      type={showPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Password"
+                      className="w-full bg-[#E5F4F2] focus:outline-none text-black"
+                      value={credentials.password}
+                      onChange={handleInputChange}
+                    />
+                    <span
+                      className="hover:cursor-pointer"
+                      onClick={() => setShowPassword((prev) => !prev)}
+                    >
+                      {showPassword && <FiEye />}
+                      {!showPassword && <FiEyeOff />}
+                    </span>
+                  </div>
 
                   <small className="text-[#BFAC05]">
                     <i>Forgot your password?</i>{" "}
@@ -115,11 +130,13 @@ const LoginModal: FC<LoginModalProps> = ({
                 </div>
 
                 <button
-                  onClick={handleSignIn}
+                  type="submit"
                   className="px-12 py-2 bg-[#009379] text-[#F8F9FF] rounded-2xl font-semibold"
                   disabled={
                     isLoading ||
-                    Object.values(details).some((value) => value.trim() === "")
+                    Object.values(credentials).some(
+                      (value) => value.trim() === ""
+                    )
                   }
                 >
                   {isLoading && (
@@ -131,7 +148,7 @@ const LoginModal: FC<LoginModalProps> = ({
 
                   {!isLoading && "Sign In"}
                 </button>
-              </div>
+              </form>
               <small className="block md:hidden">
                 Don't have an account?{" "}
                 <button onClick={openRegisterModal} className="underline">
