@@ -1,13 +1,43 @@
-import { FC } from "react";
-import MobileNavbar from "./MobileNavbar";
+import api from "../api/axios";
+import { MdMail } from "react-icons/md";
 import { FaSearch } from "react-icons/fa";
+import { FaCircleUser } from "react-icons/fa6";
+import { FC, useEffect, useState } from "react";
+import { IoNotifications } from "react-icons/io5";
+
+import MobileNavbar from "./MobileNavbar";
 
 type NavbarProps = {
   isVisible?: boolean;
   onLoginClick: () => void;
 };
 
+export type User = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  image_url: string;
+  date_joined: string;
+  role: string;
+};
+
 const Navbar: FC<NavbarProps> = ({ isVisible, onLoginClick }) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  const fetchProfile = async () => {
+    try {
+      const response = await api.get("/auth/users/me/");
+
+      // console.log(response.data);
+      setUser(response.data);
+    } catch (error) {}
+  };
+
+  useEffect(() => {
+    fetchProfile();
+  }, []);
+
   return (
     <header
       className={`${
@@ -34,25 +64,49 @@ const Navbar: FC<NavbarProps> = ({ isVisible, onLoginClick }) => {
 
         {/* Desktop view */}
         <div className="hidden text-base md:flex gap-4 lg:gap-2 xl:gap-8 items-center">
-          <ul className="flex gap-4  xl:gap-8 font-semibold">
-            <li>Discover</li>
-            <li>Hire</li>
-            <li>Jobs</li>
-            <li>Sell your skills</li>
-          </ul>
+          {user && (
+            <>
+              <div className="flex items-center gap-4">
+                <MdMail size={22} />
+                <IoNotifications size={22} />
 
-          <button
-            className={`border px-4 py-2 ${
-              isVisible ? "border-[#2D2D2D]" : "border-[#F8F9FF]"
-            }`}
-            onClick={onLoginClick}
-          >
-            Sign In
-          </button>
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <FaCircleUser size={30} />
+
+                  <div>
+                    <p>
+                      {user.first_name} {user.last_name}
+                    </p>
+                    <small>{user.email}</small>
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {!user && (
+            <>
+              <ul className="flex gap-4 xl:gap-8 font-semibold">
+                <li>Discover</li>
+                <li>Hire</li>
+                <li>Jobs</li>
+                <li>Sell your skills</li>
+              </ul>
+
+              <button
+                className={`border px-4 py-2 ${
+                  isVisible ? "border-[#2D2D2D]" : "border-[#F8F9FF]"
+                }`}
+                onClick={onLoginClick}
+              >
+                Sign In
+              </button>
+            </>
+          )}
         </div>
 
         {/* Mobile view */}
-        <MobileNavbar onLoginClick={onLoginClick} />
+        <MobileNavbar onLoginClick={onLoginClick} user={user} />
       </nav>
     </header>
   );
