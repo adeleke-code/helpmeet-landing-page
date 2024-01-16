@@ -23,6 +23,8 @@ const TextInput: FC<TextInputProps> = ({
       <input
         type={type}
         name={name}
+        autoComplete="off"
+        required
         placeholder={placeholder}
         className="w-full bg-[#E5F4F2] focus:outline-none text-black"
         value={value}
