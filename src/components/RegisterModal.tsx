@@ -8,8 +8,8 @@ import { ImSpinner10 } from "react-icons/im";
 import { MdLockOutline } from "react-icons/md";
 import { MdOutlineEmail } from "react-icons/md";
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { ChangeEvent, FC, useState } from "react";
 import { MdOutlineLocalPhone } from "react-icons/md";
+import { ChangeEvent, FC, FormEvent, useState } from "react";
 
 import Button from "./Button";
 import TextInput from "./TextInput";
@@ -27,7 +27,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
   openLoginModal,
   openOtpModal,
 }) => {
-  const [details, setDetails] = useState({
+  const [credentials, setCredentials] = useState({
     first_name: "",
     last_name: "",
     email: "",
@@ -44,26 +44,28 @@ const RegisterModal: FC<RegisterModalProps> = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setDetails((prev) => {
+    setCredentials((prev) => {
       return { ...prev, [event.target.name]: event.target.value };
     });
   };
 
-  const passwordsMatch = details.password === details.re_password;
+  const passwordsMatch = credentials.password === credentials.re_password;
 
-  const handleSignUp = async () => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
     if (passwordsMatch) {
       try {
         setIsLoading(true);
 
         await axios.post(
           `${process.env.REACT_APP_BASE_URI}/auth/users/`,
-          details
+          credentials
         );
 
         // console.log(response.data);
 
-        setDetails({
+        setCredentials({
           first_name: "",
           last_name: "",
           email: "",
@@ -121,7 +123,10 @@ const RegisterModal: FC<RegisterModalProps> = ({
                 </div>
               </div>
 
-              <div className="w-full space-y-2 md:space-y-6">
+              <form
+                onSubmit={handleSubmit}
+                className="w-full space-y-2 md:space-y-6"
+              >
                 <p className="text-lg">Or register with your email</p>
 
                 <div className="space-y-2 text-base">
@@ -130,7 +135,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
                     name="first_name"
                     placeholder="First Name"
                     iconComponent={<LuUser2 />}
-                    value={details.first_name}
+                    value={credentials.first_name}
                     onChange={handleInputChange}
                   />
 
@@ -139,7 +144,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
                     name="last_name"
                     placeholder="Last Name"
                     iconComponent={<LuUser2 />}
-                    value={details.last_name}
+                    value={credentials.last_name}
                     onChange={handleInputChange}
                   />
 
@@ -148,7 +153,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
                     name="email"
                     placeholder="Email"
                     iconComponent={<MdOutlineEmail />}
-                    value={details.email}
+                    value={credentials.email}
                     onChange={handleInputChange}
                   />
 
@@ -157,7 +162,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
                     name="phone"
                     placeholder="Phone Number"
                     iconComponent={<MdOutlineLocalPhone />}
-                    value={details.phone}
+                    value={credentials.phone}
                     onChange={handleInputChange}
                   />
 
@@ -175,7 +180,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
                         name="password"
                         placeholder="Password"
                         className="w-full bg-[#E5F4F2] focus:outline-none text-black"
-                        value={details.password}
+                        value={credentials.password}
                         onChange={handleInputChange}
                       />
                       <span
@@ -199,7 +204,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
                         name="re_password"
                         placeholder="Confirm password"
                         className="w-full bg-[#E5F4F2] focus:outline-none text-black"
-                        value={details.re_password}
+                        value={credentials.re_password}
                         onChange={handleInputChange}
                       />
                       <span
@@ -219,12 +224,14 @@ const RegisterModal: FC<RegisterModalProps> = ({
                 </div>
 
                 <button
-                  onClick={handleSignUp}
+                  type="submit"
                   className="px-12 py-2 bg-[#009379] text-[#F8F9FF] rounded-2xl font-semibold"
                   disabled={
                     isLoading ||
                     !passwordsMatch ||
-                    Object.values(details).some((value) => value.trim() === "")
+                    Object.values(credentials).some(
+                      (value) => value.trim() === ""
+                    )
                   }
                 >
                   {isLoading && (
@@ -236,7 +243,7 @@ const RegisterModal: FC<RegisterModalProps> = ({
 
                   {!isLoading && "Sign Up"}
                 </button>
-              </div>
+              </form>
               <small className="block md:hidden">
                 Already have an account?{" "}
                 <button onClick={openLoginModal} className="underline">
