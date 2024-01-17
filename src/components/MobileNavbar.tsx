@@ -5,6 +5,7 @@ import { User } from "./Navbar";
 
 import CloseIcon from "../assets/icons/CloseIcon";
 import BurgerMenuIcon from "../assets/icons/BurgerMenuIcon";
+import { FaCircleUser } from "react-icons/fa6";
 
 type MobileNavbarProps = {
   onLoginClick: () => void;
@@ -33,6 +34,19 @@ const MobileNavbar: FC<MobileNavbarProps> = ({ onLoginClick, user }) => {
             : "ease-in-out duration-500 fixed top-16 right-[-100%]"
         }
       >
+        {user && (
+          <div className="text-black flex items-center gap-2 cursor-pointer">
+            <FaCircleUser size={30} />
+
+            <div>
+              <p>
+                {user.first_name} {user.last_name}
+              </p>
+              <small>{user.email}</small>
+            </div>
+          </div>
+        )}
+
         {!user && (
           <div className="py-4 text-lg flex flex-col items-center gap-6">
             <ul className="space-y-4 text-[#009379] font-semibold">
